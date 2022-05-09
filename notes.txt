@@ -1,0 +1,465 @@
+-----------------------------------------------------------------
+------------------------------ SQL ------------------------------
+-----------------------------------------------------------------
+
+SQL stands for Structrured Query Language is a special porpuse query language
+which is used to manipulate sets of data. Is used to manage databases which 
+are data containers. This is an efficient way to store and manage data. 
+Databases store data in a 'kind of' spreadsheets.
+
+Under this context, the word query stands for mangement of data
+
+SQL can work along with programming languages (such as Python) and with
+it's own GUI
+
+There are several models related to the SQL paradigm
+
+-----------------------------------------------------------------
+--------------------------- Database ----------------------------
+-----------------------------------------------------------------
+
+A database is a organized way to store data. This way the data is 
+organized is dictated by the paradigm followed to build it.
+
+Consider that the database stores data in arrangements called tables.
+A database can store multiple tables.
+
+Tables are pretty much like a spreadsheet having every related data input
+added in rows. Every row must/should contain the same ammount of fields.
+For instance, a database that stores users personal information, every 
+field is related to a column (or to another table) and every users data is
+stored in one row
+
+Every database has a management system
+
+-----------------------------------------------------------------
+--------------------- SQL Relational model ----------------------
+-----------------------------------------------------------------
+
+A model is the way that a database strores data and interacts with it
+
+A relational model links several tables with the contentent of different
+databases or tables.
+
+For instance, in a user database that stores several user's personal 
+information the field email should be able to store multiple email adresses
+but instead of adding n-rows to store the maximum ammount of available 
+emails such field can be RELATED to another database or table that stores 
+emails having a reference to every user's email.
+
+The DATABASE NORMALIZATION is a process applied to a table of a database
+with filelds that allows multiple inputs. This consists in the creation
+of another table to store the multiple inputs of a field and relating every 
+row of both tables with a key value to match the information. This 
+capability to relate data from different tables is what makes a model of 
+database RELATIONAL.
+
+There are other several models 
+
+-----------------------------------------------------------------
+----------------------------- MySQL -----------------------------
+-----------------------------------------------------------------
+
+MySQL is a DBMS (database management system) developed by Oracle
+
+To get this DBMS this link must be followed (there are several 
+distributions of MySQL but we'll be working with the Community distribution):
+
+https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-8.0.29.0.msi
+
+This sofware will be downloaded using the previous link. If any problem 
+presented during the installation there must be deleted every SQL 
+software (if possible) from the PC. The installation will required a 
+password creation and several 'next' steps
+
+It will allow to create several SQL connections or sessions, this helps to
+manage several servers/databases/projects. Once opened the MySQL Workbench
+there is a left vertical panel for:
+1 - Welcome panel: It offers access to every MySQL projects, to manage every
+MySQL project and to create new ones
+2 - Models: It offers acces to every developed BD model available on the PC
+3 - Migration: It allows several options to migrate DB
+
+There's a tab menu on the upper part of the window that allows to navigate 
+though several projects/models/migration workspaces
+
+When accessed a MySQL project the workspace has:
+1 - Navigator panel
+2 - Information panel
+3 - Output panel
+4 - SQLaddition
+5 - Fast acces action panel
+6 - Commands panel
+7 - Query and edit menu
+
+-----------------------------------------------------------------
+------------------------ SQL Statements -------------------------
+-----------------------------------------------------------------
+
+SQL works with a set of statements/commands to make different actions
+which are considered the CRUD frunctionality. CRUD stands for: Create,
+Read, Update and Delete.
+
+Is a common and considered a good practice to write every statement in the 
+SQL environment in upper case. SQL is a case insensitive language.
+
+Note: There are several resources placed on the '.../resources/provided' folder
+Every file made by Myself (Wilfred Medina) will be stored on the '.../resources/created'
+folder
+
+Note: To create a new SCHEMA (interconnected objects from Databases):
+    * Go to the command panel and click on "Create new Schema"
+    * Set a name to the new Schema and click on apply
+    * On the pop up window click on apply accepting the default create
+    statement
+    * Done
+To then import a database:
+    * Go to the command panel and click on "Open a SQL script"
+    * Search for the SQL file (in this case the file is in the '.../resources/provided'
+    folder, the one selected is the 'helalee_db.sql')
+Every query or SQL statement has to be executed upon a data reference. It cannot
+work in the 'thin air'. In this case the statements will work upon the 'test_db'
+which was the name provided for the Schema created, then, to select it and to work
+upon it there must be double clicked up the Navigator panel, on the Schema tab. After
+that, to execute the SQL script go to the 'Query and edit menu' and select the 'thunder'
+icon. Once executed the SQL script there can be seen on the Output panel the result 
+of the execution of the script. To see every change made upon the Schema created 
+there has to be clicked the refresh button on top of the Navigator panel on the
+Schema tab, then on the Schema tree the changes will be available.
+The 'helalee_db.sql' creates several tables with default values on the 'test_db'.
+When hoovering the mouse over every table of the Database there will be displayed
+three icons, each of the stands for different views that can be accessed:
+    * Information
+    * Settings
+    * Table contentent/grid
+Once accessed the 'Table contentent/grid' option from the 'countries' tables there
+will be displayed on the 'Query and edit menu' the statement:
+'SELECT * FROM test_db.countries;'
+
+The syntax of a SQL instruction goes like this:
+    * Statement followed by the column we want to work with. In case theres a '*'
+    it means that we will work with every column of a teble
+    * FROM opens place to set the reference from wich a column will be accessed
+    * The name of the Database/Schema followed by a '.' and the name of the table
+Note: To execute a script there must be selected on the Navigator pannel the Schema
+we want to work with. if it's not selected there must be specified the Database/Schema
+on the instruction.
+To select the Schema there alse can be used the 'USE' statement to specify the Schema 
+we are working with before stablishing any other statement
+'USE test_db;
+SELECT * FROM countries;'
+
+An statement is composed by several clauses, in this case a statemente to select a 
+table is composed by the SELECT clause and by the FROM clause containing all the 
+arguments.
+
+It is considered a good practice to break a statemente in several lines for each clause
+contained in the statement
+'SELECT * 
+FROM countries;'
+
+- SELECT: Allows to select columns for a Shcema/Database-table. With MySQL once executed 
+these statements the data included in the tables can be reviewed
+- SELECT DISTINCT: Allows to select all the present values in a column, or in another words,
+all the categories in a column without a repetition
+- INSERT: Allows to add values to a table, row or column. These values must be formatted 
+for each column. If a row is inserted without a value for a column each column can place
+a default value which is defined whenever table is created. In the case of the example 
+two values are string which are delcared using quotation marks ('') and int which are 
+declared just by passing them all the values are passed using () and separating them
+by commas
+- UPDATE: Allows to change some values using a reference to a row to change other column 
+values
+- DELETE: Allows to delete either the  content of a whole table or a row using the WHERE
+clause in a statement
+
+-----------------------------------------------------------------
+-------------------- SQL Table-Qualification --------------------
+-----------------------------------------------------------------
+
+It is a common and considered a good practice to actually specify the 
+table from the Schema we're working with
+
+'SELECT table.column1, table.column2 FROM schema.table'
+
+It's considered that this practice actually allows to execute SQL scripts
+faster
+
+-----------------------------------------------------------------
+----------------------- SQL Table-Aliasing ----------------------
+-----------------------------------------------------------------
+
+The table ALiasing allows to give a nickname to a table by adding the nickname
+next to its name as the following example
+
+'USE test_db;
+SELECT dep.department_id, dep.department_name	
+FROM departments dep;'
+
+This alias can be refered before using it as seen in the argument of the 
+SELECT clause
+
+-----------------------------------------------------------------
+------------------------ SQL WHERE clause -----------------------
+-----------------------------------------------------------------
+
+The WHERE clause will act as a conditional statement only allowing the statement 
+to act or execute the rest of the clauses when the condition is True
+
+-----------------------------------------------------------------
+------------------------ SQL AND boolean ------------------------
+-----------------------------------------------------------------
+
+The AND boolean operator allows to execute several conditional instructions with
+the WHEN clause. The AND operator gets a statement executed if the invovled 
+conditional statements are True
+
+'USE test_db;
+
+SELECT emp.employee_id, emp.first_name, emp.last_name
+FROM employees emp
+WHERE salary > 4000 AND salary < 10000 ;'
+
+-----------------------------------------------------------------
+------------------------- SQL OR boolean ------------------------
+-----------------------------------------------------------------
+
+The OR boolean operator allows to execute several conditional instructions with
+the WHEN clause. The OR operator gets a statement executed if any of the invovled 
+conditional statements are True
+
+-----------------------------------------------------------------
+---------------------- SQL BETWEEN boolean ----------------------
+-----------------------------------------------------------------
+
+The BETWEEN boolean operator allows to stablish a lower and upper threshold for a 
+value. The BETWEEN operator will return data from the rows between such threshold
+
+-----------------------------------------------------------------
+----------------------- SQL LIKE boolean ------------------------
+-----------------------------------------------------------------
+
+The LIKE operator allows to find the values that is alike a pattern
+
+'USE test_db;
+
+
+SELECT c.country_name
+FROM countries c
+WHERE c.country_name
+LIKE '_a%';'
+
+The pattern can be:
+'X%' - Starts with
+'%X' - Ends with
+'%X%' - It has within
+'_X%' - Second leter is (or nth)
+
+-----------------------------------------------------------------
+------------------------- SQL IN boolean ------------------------
+-----------------------------------------------------------------
+
+The IN clause allows to match the values within a set of values
+
+-----------------------------------------------------------------
+------------------------- SQL IS boolean ------------------------
+-----------------------------------------------------------------
+
+The IS clause is used to select the NULL values
+
+Column Constraints
+
+PK: Primary key - Uniquely indenitfies a row and must contain unique values
+NN: Not Null - Must not be empty
+UQ: Unique - Values canno included in column cannot be repeated|
+B: Binary - Only binary values
+UN: Unsigned - Allows only positive integers until 4294967295
+ZF: Zero Fill - Makes a field filled with an X number of zeros. For input
+12 and number of zeros 5 the stored value will be 00012
+AI: Autoincrement - Allows a unique number to be generated when a new 
+record is inserted into a table
+G: Generated - Value generated under a formula applied to data from 
+other columns
+Default: Sets a default value if is not specified when inserting values in a row
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+INFO GATHERED FROM:
+https://www.w3schools.com/sql/sql_datatypes.asp
+
+DATA TYPES
+    MySQL Data Types (Version 8.0):
+        String Data Types:
+            Data type	Description
+            CHAR(size)	A FIXED length string (can contain letters, numbers, and special characters). The size parameter specifies the column length in characters - can be from 0 to 255. Default is 1
+            VARCHAR(size)	A VARIABLE length string (can contain letters, numbers, and special characters). The size parameter specifies the maximum column length in characters - can be from 0 to 65535
+            BINARY(size)	Equal to CHAR(), but stores binary byte strings. The size parameter specifies the column length in bytes. Default is 1
+            VARBINARY(size)	Equal to VARCHAR(), but stores binary byte strings. The size parameter specifies the maximum column length in bytes.
+            TINYBLOB	For BLOBs (Binary Large Objects). Max length: 255 bytes
+            TINYTEXT	Holds a string with a maximum length of 255 characters
+            TEXT(size)	Holds a string with a maximum length of 65,535 bytes
+            BLOB(size)	For BLOBs (Binary Large Objects). Holds up to 65,535 bytes of data
+            MEDIUMTEXT	Holds a string with a maximum length of 16,777,215 characters
+            MEDIUMBLOB	For BLOBs (Binary Large Objects). Holds up to 16,777,215 bytes of data
+            LONGTEXT	Holds a string with a maximum length of 4,294,967,295 characters
+            LONGBLOB	For BLOBs (Binary Large Objects). Holds up to 4,294,967,295 bytes of data
+            ENUM(val1, val2, val3, ...)	A string object that can have only one value, chosen from a list of possible values. You can list up to 65535 values in an ENUM list. If a value is inserted that is not in the list, a blank value will be inserted. The values are sorted in the order you enter them
+            SET(val1, val2, val3, ...)	A string object that can have 0 or more values, chosen from a list of possible values. You can list up to 64 values in a SET list
+            Numeric Data Types
+            Data type	Description
+            BIT(size)	A bit-value type. The number of bits per value is specified in size. The size parameter can hold a value from 1 to 64. The default value for size is 1.
+            TINYINT(size)	A very small integer. Signed range is from -128 to 127. Unsigned range is from 0 to 255. The size parameter specifies the maximum display width (which is 255)
+            BOOL	Zero is considered as false, nonzero values are considered as true.
+            BOOLEAN	Equal to BOOL
+            SMALLINT(size)	A small integer. Signed range is from -32768 to 32767. Unsigned range is from 0 to 65535. The size parameter specifies the maximum display width (which is 255)
+            MEDIUMINT(size)	A medium integer. Signed range is from -8388608 to 8388607. Unsigned range is from 0 to 16777215. The size parameter specifies the maximum display width (which is 255)
+            INT(size)	A medium integer. Signed range is from -2147483648 to 2147483647. Unsigned range is from 0 to 4294967295. The size parameter specifies the maximum display width (which is 255)
+            INTEGER(size)	Equal to INT(size)
+            BIGINT(size)	A large integer. Signed range is from -9223372036854775808 to 9223372036854775807. Unsigned range is from 0 to 18446744073709551615. The size parameter specifies the maximum display width (which is 255)
+            FLOAT(size, d)	A floating point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter. This syntax is deprecated in MySQL 8.0.17, and it will be removed in future MySQL versions
+            FLOAT(p)	A floating point number. MySQL uses the p value to determine whether to use FLOAT or DOUBLE for the resulting data type. If p is from 0 to 24, the data type becomes FLOAT(). If p is from 25 to 53, the data type becomes DOUBLE()
+            DOUBLE(size, d)	A normal-size floating point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter
+            DOUBLE PRECISION(size, d)	 
+            DECIMAL(size, d)	An exact fixed-point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter. The maximum number for size is 65. The maximum number for d is 30. The default value for size is 10. The default value for d is 0.
+            DEC(size, d)	Equal to DECIMAL(size,d)
+    Note: All the numeric data types may have an extra option: UNSIGNED or ZEROFILL. If you add the UNSIGNED option, MySQL disallows negative values for the column. If you add the ZEROFILL option, MySQL automatically also adds the UNSIGNED attribute to the column.
+        Date and Time Data Types
+            Data type	Description
+            DATE	A date. Format: YYYY-MM-DD. The supported range is from '1000-01-01' to '9999-12-31'
+            DATETIME(fsp)	A date and time combination. Format: YYYY-MM-DD hh:mm:ss. The supported range is from '1000-01-01 00:00:00' to '9999-12-31 23:59:59'. Adding DEFAULT and ON UPDATE in the column definition to get automatic initialization and updating to the current date and time
+            TIMESTAMP(fsp)	A timestamp. TIMESTAMP values are stored as the number of seconds since the Unix epoch ('1970-01-01 00:00:00' UTC). Format: YYYY-MM-DD hh:mm:ss. The supported range is from '1970-01-01 00:00:01' UTC to '2038-01-09 03:14:07' UTC. Automatic initialization and updating to the current date and time can be specified using DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP in the column definition
+            TIME(fsp)	A time. Format: hh:mm:ss. The supported range is from '-838:59:59' to '838:59:59'
+            YEAR	A year in four-digit format. Values allowed in four-digit format: 1901 to 2155, and 0000.
+            MySQL 8.0 does not support year in two-digit format.
+
+    SQL Server Data Types
+        String Data Types
+            Data type	Description	Max size	Storage
+            char(n)	Fixed width character string	8,000 characters	Defined width
+            varchar(n)	Variable width character string	8,000 characters	2 bytes + number of chars
+            varchar(max)	Variable width character string	1,073,741,824 characters	2 bytes + number of chars
+            text	Variable width character string	2GB of text data	4 bytes + number of chars
+            nchar	Fixed width Unicode string	4,000 characters	Defined width x 2
+            nvarchar	Variable width Unicode string	4,000 characters	 
+            nvarchar(max)	Variable width Unicode string	536,870,912 characters	 
+            ntext	Variable width Unicode string	2GB of text data	 
+            binary(n)	Fixed width binary string	8,000 bytes	 
+            varbinary	Variable width binary string	8,000 bytes	 
+            varbinary(max)	Variable width binary string	2GB	 
+            image	Variable width binary string	2GB	 
+        Numeric Data Types
+            Data type	Description	Storage
+            bit	Integer that can be 0, 1, or NULL	 
+            tinyint	Allows whole numbers from 0 to 255	1 byte
+            smallint	Allows whole numbers between -32,768 and 32,767	2 bytes
+            int	Allows whole numbers between -2,147,483,648 and 2,147,483,647	4 bytes
+            bigint	Allows whole numbers between -9,223,372,036,854,775,808 and 9,223,372,036,854,775,807	8 bytes
+            decimal(p,s)	Fixed precision and scale numbers. Allows numbers from -10^38 +1 to 10^38 –1. The p parameter indicates the maximum total number of digits that can be stored (both to the left and to the right of the decimal point). p must be a value from 1 to 38. Default is 18. The s parameter indicates the maximum number of digits stored to the right of the decimal point. s must be a value from 0 to p. Default value is 0 (5-17 bytes)
+            numeric(p,s)	Fixed precision and scale numbers. Allows numbers from -10^38 +1 to 10^38 –1. The p parameter indicates the maximum total number of digits that can be stored (both to the left and to the right of the decimal point). p must be a value from 1 to 38. Default is 18. The s parameter indicates the maximum number of digits stored to the right of the decimal point. s must be a value from 0 to p. Default value is 0 (5-17 bytes)
+            smallmoney	Monetary data from -214,748.3648 to 214,748.3647. (4 bytes)
+            money	Monetary data from -922,337,203,685,477.5808 to 922,337,203,685,477.5807. (8 bytes)
+            float(n)	Floating precision number data from -1.79E + 308 to 1.79E + 308. The n parameter indicates whether the field should hold 4 or 8 bytes. float(24) holds a 4-byte field and float(53) holds an 8-byte field. Default value of n is 53. (4 or 8 bytes)
+            real	Floating precision number data from -3.40E + 38 to 3.40E + 38	(4 bytes)
+        Date and Time Data Types
+            Data type	Description	Storage
+            datetime	From January 1, 1753 to December 31, 9999 with an accuracy of 3.33 milliseconds	8 bytes
+            datetime2	From January 1, 0001 to December 31, 9999 with an accuracy of 100 nanoseconds	6-8 bytes
+            smalldatetime	From January 1, 1900 to June 6, 2079 with an accuracy of 1 minute	4 bytes
+            date	Store a date only. From January 1, 0001 to December 31, 9999	3 bytes
+            time	Store a time only to an accuracy of 100 nanoseconds	3-5 bytes
+            datetimeoffset	The same as datetime2 with the addition of a time zone offset	8-10 bytes
+            timestamp	Stores a unique number that gets updated every time a row gets created or modified. The timestamp value is based upon an internal clock and does not correspond to real time. Each table may have only one timestamp variable	 
+        Other Data Types
+            Data type	Description
+            sql_variant	Stores up to 8,000 bytes of data of various data types, except text, ntext, and timestamp
+            uniqueidentifier	Stores a globally unique identifier (GUID)
+            xml	Stores XML formatted data. Maximum 2GB
+            cursor	Stores a reference to a cursor used for database operations
+            table	Stores a result-set for later processing
+
+
+INFO GATHERED FROM:
+https://www.w3schools.com/sql/sql_ref_keywords.asp
+
+SQL Keywords
+    Keyword	Description
+    ADD	Adds a column in an existing table
+    ADD CONSTRAINT	Adds a constraint after a table is already created
+    ALL	Returns true if all of the subquery values meet the condition
+    ALTER	Adds, deletes, or modifies columns in a table, or changes the data type of a column in a table
+    ALTER COLUMN	Changes the data type of a column in a table
+    ALTER TABLE	Adds, deletes, or modifies columns in a table
+    AND	Only includes rows where both conditions is true
+    ANY	Returns true if any of the subquery values meet the condition
+    AS	Renames a column or table with an alias
+    ASC	Sorts the result set in ascending order
+    BACKUP DATABASE	Creates a back up of an existing database
+    BETWEEN	Selects values within a given range
+    CASE	Creates different outputs based on conditions
+    CHECK	A constraint that limits the value that can be placed in a column
+    COLUMN	Changes the data type of a column or deletes a column in a table
+    CONSTRAINT	Adds or deletes a constraint
+    CREATE	Creates a database, index, view, table, or procedure
+    CREATE DATABASE	Creates a new SQL database
+    CREATE INDEX	Creates an index on a table (allows duplicate values)
+    CREATE OR REPLACE VIEW	Updates a view
+    CREATE TABLE	Creates a new table in the database
+    CREATE PROCEDURE	Creates a stored procedure
+    CREATE UNIQUE INDEX	Creates a unique index on a table (no duplicate values)
+    CREATE VIEW	Creates a view based on the result set of a SELECT statement
+    DATABASE	Creates or deletes an SQL database
+    DEFAULT	A constraint that provides a default value for a column
+    DELETE	Deletes rows from a table
+    DESC	Sorts the result set in descending order
+    DISTINCT	Selects only distinct (different) values
+    DROP	Deletes a column, constraint, database, index, table, or view
+    DROP COLUMN	Deletes a column in a table
+    DROP CONSTRAINT	Deletes a UNIQUE, PRIMARY KEY, FOREIGN KEY, or CHECK constraint
+    DROP DATABASE	Deletes an existing SQL database
+    DROP DEFAULT	Deletes a DEFAULT constraint
+    DROP INDEX	Deletes an index in a table
+    DROP TABLE	Deletes an existing table in the database
+    DROP VIEW	Deletes a view
+    EXEC	Executes a stored procedure
+    EXISTS	Tests for the existence of any record in a subquery
+    FOREIGN KEY	A constraint that is a key used to link two tables together
+    FROM	Specifies which table to select or delete data from
+    FULL OUTER JOIN	Returns all rows when there is a match in either left table or right table
+    GROUP BY	Groups the result set (used with aggregate functions: COUNT, MAX, MIN, SUM, AVG)
+    HAVING	Used instead of WHERE with aggregate functions
+    IN	Allows you to specify multiple values in a WHERE clause
+    INDEX	Creates or deletes an index in a table
+    INNER JOIN	Returns rows that have matching values in both tables
+    INSERT INTO	Inserts new rows in a table
+    INSERT INTO SELECT	Copies data from one table into another table
+    IS NULL	Tests for empty values
+    IS NOT NULL	Tests for non-empty values
+    JOIN	Joins tables
+    LEFT JOIN	Returns all rows from the left table, and the matching rows from the right table
+    LIKE	Searches for a specified pattern in a column
+    LIMIT	Specifies the number of records to return in the result set
+    NOT	Only includes rows where a condition is not true
+    NOT NULL	A constraint that enforces a column to not accept NULL values
+    OR	Includes rows where either condition is true
+    ORDER BY	Sorts the result set in ascending or descending order
+    OUTER JOIN	Returns all rows when there is a match in either left table or right table
+    PRIMARY KEY	A constraint that uniquely identifies each record in a database table
+    PROCEDURE	A stored procedure
+    RIGHT JOIN	Returns all rows from the right table, and the matching rows from the left table
+    ROWNUM	Specifies the number of records to return in the result set
+    SELECT	Selects data from a database
+    SELECT DISTINCT	Selects only distinct (different) values
+    SELECT INTO	Copies data from one table into a new table
+    SELECT TOP	Specifies the number of records to return in the result set
+    SET	Specifies which columns and values that should be updated in a table
+    TABLE	Creates a table, or adds, deletes, or modifies columns in a table, or deletes a table or data inside a table
+    TOP	Specifies the number of records to return in the result set
+    TRUNCATE TABLE	Deletes the data inside a table, but not the table itself
+    UNION	Combines the result set of two or more SELECT statements (only distinct values)
+    UNION ALL	Combines the result set of two or more SELECT statements (allows duplicate values)
+    UNIQUE	A constraint that ensures that all values in a column are unique
+    UPDATE	Updates existing rows in a table
+    VALUES	Specifies the values of an INSERT INTO statement
+    VIEW	Creates, updates, or deletes a view
+    WHERE	Filters a result set to include only records that fulfill a specified condition
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
