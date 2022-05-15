@@ -261,28 +261,288 @@ The pattern can be:
 
 The IN clause allows to match the values within a set of values
 
+'USE test_db;
+
+SELECT emp.first_name, emp.last_name, emp.hire_date
+FROM employees emp
+WHERE emp.manager_id
+IN (100, 103, 108);'
+
 -----------------------------------------------------------------
 ------------------------- SQL IS boolean ------------------------
 -----------------------------------------------------------------
 
 The IS clause is used to select the NULL values
 
-Column Constraints
+'USE test_db;
 
-PK: Primary key - Uniquely indenitfies a row and must contain unique values
-NN: Not Null - Must not be empty
-UQ: Unique - Values canno included in column cannot be repeated|
-B: Binary - Only binary values
-UN: Unsigned - Allows only positive integers until 4294967295
-ZF: Zero Fill - Makes a field filled with an X number of zeros. For input
-12 and number of zeros 5 the stored value will be 00012
-AI: Autoincrement - Allows a unique number to be generated when a new 
-record is inserted into a table
-G: Generated - Value generated under a formula applied to data from 
-other columns
-Default: Sets a default value if is not specified when inserting values in a row
+SELECT emp.first_name, emp.last_name
+FROM employees emp
+WHERE emp.phone_number
+IS NULL;'
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------
+----------------------- SQL IS NOT boolean ----------------------
+-----------------------------------------------------------------
+
+The IS clause is used to select the NOT NULL values
+
+'USE test_db;
+
+SELECT emp.first_name, emp.last_name
+FROM employees emp
+WHERE emp.phone_number
+IS NOT NULL;'
+
+-----------------------------------------------------------------
+---------------------- SQL ORDER BY clause ----------------------
+-----------------------------------------------------------------
+
+The ORDER BY clause is used to order a table according to a ascendant order
+of the values of a column
+
+'USE test_db;
+
+SELECT e.first_name, e.last_name, e.salary
+FROM employees e
+ORDER BY e.salary;'
+
+-----------------------------------------------------------------
+----------------------- SQL set functions -----------------------
+-----------------------------------------------------------------
+
+The set functions are used to process a full column
+
+These functions are:
+
+- COUNT() Returns the number of rows of a particular column, if passed a '*' as an argument it will
+include the NULL values, and if passed the column name it will return the NOT NULL values
+- MAX() Returns the maximum value for a particular column
+- MIN() Returns the minimum value for a particular column
+- AVG() Returns the average value for a particular column - Works only with numerical columns
+- SUM() Returns the sum of values for a particular column - Works only with numerical columns
+- ROUND () Returns a rounded integer value from a float value - Works only with numerical columns
+
+-----------------------------------------------------------------
+--------------- SQL set functions with qualifiers ---------------
+-----------------------------------------------------------------
+
+Qualifiers can be used to filter for unique values and then use the result as an argument for
+set functions
+
+'USE test_db;
+
+SELECT COUNT(DISTINCT loc.country_id)
+FROM locations loc;'
+
+-----------------------------------------------------------------
+---------------------- SQL GROUP BY clause ----------------------
+-----------------------------------------------------------------
+
+The GROUP BY clause will group a table in subsets for every unique value within
+a column. When using a set function it will return as may rows as subsets are found in the 
+column of the table
+
+'USE test_db;
+
+SELECT COUNT(loc.country_id),loc.country_id
+FROM locations loc
+GROUP BY loc.country_id;'
+
+-----------------------------------------------------------------
+----------------------- SQL HAVING clause -----------------------
+-----------------------------------------------------------------
+
+The HAVING clause will filter the values that have a particular pattern when
+creating subsets when unsing the GROUP BY clause
+
+'USE test_db;
+
+SELECT COUNT(loc.country_id),loc.country_id
+FROM locations loc
+GROUP BY loc.country_id
+HAVING loc.country_id = 'US';'
+
+This next example will show how aliasing can help to avoid redundancy
+
+'USE test_db;
+
+SELECT COUNT(loc.country_id) as countryID, loc.country_id
+FROM locations loc
+GROUP BY loc.country_id
+HAVING countryID = 'US';'
+
+-----------------------------------------------------------------
+------------------------- SQL CROSS JOIN ------------------------
+-----------------------------------------------------------------
+
+This process allows us to create a table from several tables but each row will be
+aligned without any order
+
+'USE test_db;
+
+SELECT
+emp.first_name,
+emp.last_name,
+dep.department_name
+FROM
+employees emp,
+departments dep;'
+
+-----------------------------------------------------------------
+------------------------- SQL INNER JOIN ------------------------
+-----------------------------------------------------------------
+
+The INNER JOIN will match the rows from one table to another table using the matching values 
+of two tables (better known as key values). This is what makes a relational database A 
+relational database.
+There has to be declared a main set of keys called primary keys and a secondary set of keys 
+called foreign keys.
+The primary key must not be deleted from the parent table either the parent table itself
+The primary keys cannot have NULL values
+Each table can only have one primary key
+The primary key can be retaed to another table as a foreign key
+There can be created ID's automatically using autoincrement fields
+Primary keys suppont autoincrement values
+There cannot be deleted a primary key from the parent table
+
+
+This example allows to build a table with matching data using 
+emp.department_id and dep.department_id as the key values to match
+each row from the new table
+
+'USE test_db;
+
+SELECT
+emp.first_name,
+emp.last_name,
+dep.department_name
+FROM
+employees emp
+INNER JOIN
+departments dep
+ON
+emp.department_id = dep.department_id'
+
+-----------------------------------------------------------------
+-------------------- SQL RIGHT AND LEFT JOIN --------------------
+-----------------------------------------------------------------
+
+- The LEFT JOIN keyword returns all records from the left table (table1),
+and the matching records from the right table (table2). The result is 
+0 records from the right side, if there is no match.
+
+'SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name = table2.column_name;'
+
+Graphic representation:
+https://www.w3schools.com/sql/img_leftjoin.gif
+
+- The RIGHT JOIN keyword returns all records from the right table (table2), 
+and the matching records from the left table (table1). The result is 0 
+records from the left side, if there is no match.
+
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name = table2.column_name;
+
+Graphic representation:
+https://www.w3schools.com/sql/img_rightjoin.gif
+
+-----------------------------------------------------------------
+------------------------ SQL JOIN TYPES -------------------------
+-----------------------------------------------------------------
+
+- (INNER) JOIN: Returns records that have matching values in both tables
+- LEFT (OUTER) JOIN: Returns all records from the left table, and the 
+matched records from the right table
+- RIGHT (OUTER) JOIN: Returns all records from the right table, and the 
+matched records from the left table
+- FULL (OUTER) JOIN: Returns all records when there is a match in either 
+left or right table
+
+Here's a graphic representation of the different JOIN types used in the
+SQL methodology:
+https://www.w3schools.com/sql/img_leftjoin.gif
+
+-----------------------------------------------------------------
+---------------------- SQL LEFT OUTER JOIN ----------------------
+-----------------------------------------------------------------
+
+* Note that to proceed with this set of examples several changes are 
+meant to be mado upon the 'departments' table of the 'test_db'
+
+department_id had checked the (PK - NN - AI) fields checked
+department_name had the (NN) fields checked
+
+The change is to unselect every checked field and only asign:
+
+location_id (PK - NN) fields checked
+
+The LEFT OUTER JOIN deals with the NULL/and not NULL values and with values 
+present only in the left table (the left table is the one referenced after 
+the FROM clause)
+
+'USE test_db;
+
+SELECT
+emp.first_name,
+emp.last_name,
+dep.department_name,
+dep.department_id
+FROM
+employees emp
+LEFT OUTER JOIN
+departments dep
+ON 
+emp.department_id = dep.department_id;'
+
+-----------------------------------------------------------------
+--------------------- SQL RIGHT OUTER JOIN ----------------------
+-----------------------------------------------------------------
+
+The RIGHT OUTER JOIN deals with the NULL/and not NULL values and with 
+values present only in the right table (the right teble is the one 
+referenced after the JOIN clause)
+
+'USE test_db;
+
+SELECT
+emp.first_name,
+emp.last_name,
+dep.department_name,
+dep.department_id
+FROM
+employees emp
+RIGHT OUTER JOIN
+departments dep
+ON
+emp.department_id = dep.department_id;'
+
+-----------------------------------------------------------------
+--------------------- SQL CREATE A DATABASE ---------------------
+-----------------------------------------------------------------
+
+The CREATE DATABASE statement allows to create (you got it) a database.
+
+In the SQL paradigm there are a few ways to use a database and to have it
+available for our querys
+
+1st approach - USE statement
+
+-----------------------------------------------------------------
+------------------------ SQL CREATE TABLE -----------------------
+-----------------------------------------------------------------
+
+The CREATE TABLE statement allows to create (you got it) a table within 
+a database.
+
+Every table has columns and every column correspond to a particular field 
+and such field have their own datatype asociated
+
 INFO GATHERED FROM:
 https://www.w3schools.com/sql/sql_datatypes.asp
 
@@ -375,6 +635,217 @@ DATA TYPES
             xml	Stores XML formatted data. Maximum 2GB
             cursor	Stores a reference to a cursor used for database operations
             table	Stores a result-set for later processing
+
+    MS Access Data Types
+        Data type	Description	Storage
+        Text	Use for text or combinations of text and numbers. 255 characters maximum	 
+        Memo	Memo is used for larger amounts of text. Stores up to 65,536 characters. Note: You cannot sort a memo field. However, they are searchable	 
+        Byte	Allows whole numbers from 0 to 255	1 byte
+        Integer	Allows whole numbers between -32,768 and 32,767	2 bytes
+        Long	Allows whole numbers between -2,147,483,648 and 2,147,483,647	4 bytes
+        Single	Single precision floating-point. Will handle most decimals	4 bytes
+        Double	Double precision floating-point. Will handle most decimals	8 bytes
+        Currency	Use for currency. Holds up to 15 digits of whole dollars, plus 4 decimal places. Tip: You can choose which country's currency to use	8 bytes
+        AutoNumber	AutoNumber fields automatically give each record its own number, usually starting at 1	4 bytes
+        Date/Time	Use for dates and times	8 bytes
+        Yes/No	A logical field can be displayed as Yes/No, True/False, or On/Off. In code, use the constants True and False (equivalent to -1 and 0). Note: Null values are not allowed in Yes/No fields	1 bit
+        Ole Object	Can store pictures, audio, video, or other BLOBs (Binary Large Objects)	up to 1GB
+        Hyperlink	Contain links to other files, including web pages	 
+        Lookup Wizard	Let you type a list of options, which can then be chosen from a drop-down list
+
+
+'USE sql_example;
+
+CREATE TABLE students
+(
+student_id INTEGER,
+first_name VARCHAR(255),
+last_name VARCHAR(255)
+);'
+
+-----------------------------------------------------------------
+---------------------------- SQL NULL ---------------------------
+-----------------------------------------------------------------
+
+The NULL value correspond to a value that isn't defined (similar to the NONE value in Python)
+Every column can accept or not NULL values. Without any specification a column can accept
+NULL values but in case NULL values are not allowed the 'NOT NULL' constraint must be specified
+
+The students table was already created but note that the next statement is equivalent to
+entering settings and declaring the NN for the 'first_name' and the 'last_name' columns
+
+'CREATE TABLE students
+(
+student_id INTEGER,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR(255) NOT NULL
+);'
+
+-----------------------------------------------------------------
+------------------------ SQL PRIMARY KEY ------------------------
+-----------------------------------------------------------------
+
+The PRIMARY KEY is a field/column in a table which uniquely identifies each row/record in 
+a database table. Primary keys must contain unique values. A primary key column cannot have 
+NULL values.
+
+A table can have only one primary key, which may consist of single or multiple fields.
+
+The students table was already created but note that the next statement is equivalent to
+entering settings and declaring the PK and NN for the 'student_id' column
+
+'CREATE TABLE students
+(
+student_id INTEGER PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR(255) NOT NULL
+);'
+
+-----------------------------------------------------------------
+------------------------- SQL CONSTRAINT ------------------------
+-----------------------------------------------------------------
+
+The CONSTRAINT clause allows to re arrange the way a table is created employing
+a different syntax. Using yhe constraint clause is considered a better practice
+to declare the Primary Key
+
+
+'CREATE TABLE students
+(
+student_id INTEGER ,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR(255) NOT NULL,
+CONSTRAINT
+PK_student_id
+PRIMARY KEY
+(student_id)
+);'
+
+-----------------------------------------------------------------
+------------------------ SQL ALTER TABLE ------------------------
+-----------------------------------------------------------------
+
+The ALTER TABLE clause is used to modify the definition of a table, it allows to
+stablish different parameters for each field/column. The changes has to be 
+consistent with the data stored in every column (for instance, a PK parameter
+must be used with a column that doesn't have NN values)
+
+'-- This code will return an error since the 'email_address' table doesn't exist
+ALTER TABLE
+email_address
+ADD CONSTRAINT
+FK_email_address_student_id
+FOREIGN KEY
+(email_address_student_id)
+REFERENCES
+students
+(student_id);'
+
+-----------------------------------------------------------------
+------------------------- SQL DROP TABLE ------------------------
+-----------------------------------------------------------------
+
+The DROP TABLE statement is used to delete a table from a database and all 
+it's data
+
+'DROP TABLE students;'
+
+-----------------------------------------------------------------
+-------------------- SQL CREATE TABLE (VOL.2) -------------------
+-----------------------------------------------------------------
+
+The chapter is made to expose the best practices when creating a new table
+
+NOT RECOMMENDED PRACTICES - When working with the creation of several table within a database 
+it can become confusing to add constraints along with the definition of the the table
+
+'CREATE TABLE students
+(
+student_id INTEGER NOT NULL PRIMARY KEY,
+first_name VARCHAR(255),
+last_name VARCHAR(255)
+);
+
+CREATE TABLE email_adress
+(
+email_address_id INTEGER NOT NULL PRIMARY KEY,
+email_address VARCHAR(255),
+email_address_student_id INTEGER,
+CONSTRAINT
+FK_email_address_student_id
+FOREIGN KEY
+(email_address_student_id)
+REFERENCES
+students
+(student_id)
+);'
+
+
+
+BEST PRACTICES - It is recommended to first create a table and then placind the constraints, 
+like working in blocks. Definition block, constraint block, etc.
+
+
+'CREATE TABLE students
+(
+student_id INTEGER NOT NULL PRIMARY KEY,
+first_name VARCHAR(255),
+last_name VARCHAR(255)
+);
+
+CREATE TABLE email_adress
+(
+email_address_id INTEGER NOT NULL PRIMARY KEY,
+email_address VARCHAR(255),
+email_address_student_id INTEGER
+);
+
+ALTER TABLE
+email_adress
+ADD CONSTRAINT
+FK_email_address_student_id
+FOREIGN KEY
+(email_address_student_id)
+REFERENCES
+students
+(student_id)
+;'
+
+Whenever is required to drop a table there must not be referenced by any other table otherwise
+the dropping instruction will return an error. To avoid that, the reference must be eliminated
+
+To delete the 'students' table first the 'email_address' table must be deleted
+
+'DROP TABLE email_adress;
+DROP TABLE students;'
+
+TADAH!
+
+
+-----------------------------------------------------------------
+---------------------------- SQL EXTRA --------------------------
+-----------------------------------------------------------------
+
+This extra space is made to be used as a reference for further study of the SQL
+paradigm. Enjoy your journey!
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Column Constraints
+
+PK: Primary key - Uniquely indenitfies a row and must contain unique values
+NN: Not Null - Must not be empty
+UQ: Unique - Values canno included in column cannot be repeated|
+B: Binary - Only binary values
+UN: Unsigned - Allows only positive integers until 4294967295
+ZF: Zero Fill - Makes a field filled with an X number of zeros. For input
+12 and number of zeros 5 the stored value will be 00012
+AI: Autoincrement - Allows a unique number to be generated when a new 
+record is inserted into a table
+G: Generated - Value generated under a formula applied to data from 
+other columns
+Default: Sets a default value if is not specified when inserting values in a row
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 INFO GATHERED FROM:
